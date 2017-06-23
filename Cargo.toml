@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Bailey Cosier <bailey.cosier@gmail.com>"]
 
 [dependencies]
+novation_midi = { path = "./vendor/novation_midi" }
+midir = "0.3"
