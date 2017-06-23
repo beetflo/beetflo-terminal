@@ -4,5 +4,8 @@ version = "0.1.0"
 authors = ["Bailey Cosier <bailey.cosier@gmail.com>"]
 
 [dependencies]
-novation_midi = { path = "./vendor/novation_midi" }
 midir = "0.3"
+clap = "2.19"
+rayon = "0.8.1"
+env_logger = "0.3"
+log = "0.3"
