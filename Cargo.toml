@@ -9,3 +9,4 @@ clap = "2.19"
 rayon = "0.8.1"
 env_logger = "0.3"
 log = "0.3"
+cursive = { path = "./vendor/Cursive" }

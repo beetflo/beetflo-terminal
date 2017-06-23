@@ -28,12 +28,6 @@ pub enum Octave {
 use std::ops::Mul;
 use std::fmt;
 
-// impl fmt::Debug for Name {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-//         write!(f, "{}", self.str())
-//     }
-// }
-
 impl fmt::Display for Name {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.str())
@@ -43,7 +37,7 @@ impl fmt::Display for Name {
 
 impl Name {
     pub fn str(&self) -> &str {
-        debug!("{:?}", self);
+        // debug!("{:?}", self);
         match self {
             A => "A",
             ASharp => "A#",
@@ -72,7 +66,7 @@ impl Name {
 
         if i > 12 { i = i - 12 }
 
-        debug!("i:{}, interval:{} defraction: {}",i, interval, defraction);
+        // debug!("i:{}, interval:{} defraction: {}",i, interval, defraction);
         match i {
             0  => Name::C,
             1  => Name::CSharp,
@@ -94,7 +88,7 @@ impl Name {
 
 impl Octave {
     pub fn i(&self) -> u8 {
-        debug!("self: {:?}", self);
+        // debug!("self: {:?}", self);
         let s = &format!("{:?}", self)[..];
         let m = match s {
            "Oct0"=> 0,
@@ -111,7 +105,7 @@ impl Octave {
             &_ => 0,
         };
 
-        debug!("found: {}", m);
+        // debug!("found: {}", m);
         m
     }
 

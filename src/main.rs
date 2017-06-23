@@ -10,6 +10,13 @@ extern crate midir;
 extern crate clap;
 extern crate rayon;
 extern crate env_logger;
+extern crate cursive;
+
+use cursive::Cursive;
+use cursive::traits::*;
+use cursive::views::{Checkbox, Dialog, EditView, LinearLayout, ListView,
+                     SelectView, TextView};
+
 
 use clap::App;
 use std::thread;
