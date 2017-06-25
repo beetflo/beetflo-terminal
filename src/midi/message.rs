@@ -1,26 +1,26 @@
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Message {
-    state: State,
-    stamp: f64,
-    velocity: u8,
-    pitch: Pitch,
+    pub state: State,
+    pub stamp: f64,
+    pub velocity: u8,
+    pub pitch: Pitch,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Pitch {
     oct: Octave, note: Name, int: u8
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Acid { Sharp, Flat, Natural }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum State { On, Off }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Name { A, ASharp, B, C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, Unknown }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Octave {
     Oct0, Oct1, Oct2, Oct3, Oct4, Oct5, Oct6, Oct7, Oct8, Oct9, Oct10
 }
@@ -61,7 +61,7 @@ impl Name {
 
         let mut i = 0;
         if interval > defraction {
-            i =  (interval - defraction);
+            i =  interval - defraction;
         }
 
         if i > 12 { i = i - 12 }
@@ -88,7 +88,6 @@ impl Name {
 
 impl Octave {
     pub fn i(&self) -> u8 {
-        // debug!("self: {:?}", self);
         let s = &format!("{:?}", self)[..];
         let m = match s {
            "Oct0"=> 0,
@@ -138,7 +137,7 @@ impl Message {
     }
 
     pub fn describe(&self) {
-        print!("⸳⸳⸳⸳⸳..⸳⸳⸳ {:?}, {:?}, Velocity: {:?}", self.state, self.pitch, self.velocity);
+        println!("⸳⸳⸳⸳⸳..⸳⸳⸳ {:?}, {:?}, Velocity: {:?}", self.state, self.pitch, self.velocity);
     }
 
     pub fn blank() -> Message {

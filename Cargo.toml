@@ -3,10 +3,20 @@ name = "beetflo"
 version = "0.1.0"
 authors = ["Bailey Cosier <bailey.cosier@gmail.com>"]
 
+[features]
+glium = ["conrod/glium"]
+winit = ["conrod/winit"]
+
 [dependencies]
 midir = "0.3"
 clap = "2.19"
 rayon = "0.8.1"
-env_logger = "0.3"
 log = "0.3"
-cursive = { path = "./vendor/Cursive" }
+env_logger = "0.3"
+find_folder = "0.3.0"
+
+[dependencies.conrod]
+features = ["glium", "winit"]
+path = "./vendor/conrod"
+# git = "https://github.com/cosier/conrod.git"
+

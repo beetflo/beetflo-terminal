@@ -24,6 +24,8 @@ impl Reader {
     }
 
     pub fn stream(&self) {
+        debug!("beginning stream");
+
         let env = Environment::global();
         let mut input = String::new();
 
@@ -47,6 +49,7 @@ impl Reader {
         let mut internal_sender = self.sender.clone();
 
         let conn_in = midi_in.connect(in_port, "beetflo-connect", move |stamp, message, _| {
+            stdout().flush().unwrap();
             internal_sender.send(Message::from_raw(message, stamp)).unwrap();
         }, ()).map_err(|e| e.kind()).unwrap();
 
@@ -56,9 +59,9 @@ impl Reader {
 
 
         loop {
-            sleep(Duration::from_millis(1000));
+            conn_out.send(&[144, 60, 1]).unwrap();
+            sleep(Duration::from_millis(200));
             conn_out.send(&[144, 60, 0]).unwrap();
-
         }
     }
 }

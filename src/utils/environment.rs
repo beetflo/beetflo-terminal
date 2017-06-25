@@ -1,8 +1,6 @@
 
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
-use std::path::PathBuf;
-use std::{fmt, mem};
-use std;
+use std::{mem};
 
 use clap::{ArgMatches, App};
 
