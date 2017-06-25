@@ -8,8 +8,8 @@ use std;
 use midi::Message;
 use layouts::{BasicTopDownLayout};
 
-const WIDTH: u32 = 400;
-const HEIGHT: u32 = 200;
+const WIDTH: u32 = 800;
+const HEIGHT: u32 = 600;
 
 use std::sync::mpsc::Receiver;
 use surface::{Update, UpdateType};

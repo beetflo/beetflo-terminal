@@ -164,7 +164,7 @@ impl Widget for TrackOverview {
 
             // First, we'll draw the **Circle** with a radius that is half our given width.
             let radius = rect.w() / 2.0;
-            widget::Circle::fill(radius)
+            widget::Rectangle::fill([rect.w(), rect.h()])
                 .middle_of(id)
                 .graphics_for(id)
                 .color(color)
