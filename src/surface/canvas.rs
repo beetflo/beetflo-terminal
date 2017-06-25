@@ -99,7 +99,9 @@ impl Canvas {
                         std::process::exit(1);
                     },
 
-                    _ => { println!("Event:Unknown") },
+                    _ => {
+                        // println!("Event:Unknown")
+                    },
                 }
             }
 

@@ -128,12 +128,15 @@ impl Octave {
 
 impl Message {
     pub fn from_raw(raw: &[u8], stamp: f64) -> Message {
-        Message {
+        let m = Message {
             state: translate_note_state(raw[0]),
             pitch: translate_to_pitch(raw[1]),
             velocity: raw[2],
             stamp: stamp
-        }
+        };
+
+        debug!("{:#?}", m);
+        m
     }
 
     pub fn describe(&self) {

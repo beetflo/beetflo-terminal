@@ -6,7 +6,9 @@ macro_rules! make_color {
 }
 
 pub const PRIMARY_SHADE       : Color = make_color!(196.0,196.0,196.0);
-pub const SECONDARY_SHADE     : Color = make_color!(196.0,196.0,196.0);
+pub const SECONDARY_SHADE     : Color = make_color!(179.0,179.0,179.0);
 
-pub const FOOTER_BG           : Color = make_color!(196.0,196.0,196.0);
+pub const TEXT_SHADE          : Color = make_color!(126.0,126.0,126.0);
+
+pub const FOOTER_BG           : Color = make_color!(156.0,156.0,156.0);
 
