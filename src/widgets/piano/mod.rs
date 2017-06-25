@@ -1,6 +1,24 @@
-use conrod::{self, widget, Colorable, Dimensions, Labelable, Point, Positionable, Widget, UiCell, Sizeable};
-use conrod::position::Dimension;
-use widgets;
+/// widgets/piano/mod.rs
+
+mod keys;
+pub use self::keys::{Keys};
+
+use conrod::{
+    self,
+    widget,
+    Colorable,
+    Dimensions,
+    Point,
+    Positionable,
+    Widget,
+    Ui,
+    Borderable
+};
+
+use theme;
+use conrod::position::{Relative, Position, Place};
+use conrod::widget::{Text, Canvas};
+use conrod::color;
 
 pub struct Piano {
     /// An object that handles some of the dirty work of rendering a GUI. We don't
@@ -39,8 +57,11 @@ widget_style!{
 // Here is where we generate the type that will produce these identifiers.
 widget_ids! {
     pub struct Ids {
-        circle,
-        text,
+        piano_container,
+        piano_keys,
+        piano_keys_container,
+        piano_label,
+        piano_label_container
     }
 }
 
@@ -65,11 +86,6 @@ pub fn is_over_circ(circ_center: Point, mouse_point: Point, dim: Dimensions) -> 
 
 impl Piano {
 
-    pub fn attach(ui: &mut UiCell) {
-
-    }
-
-    /// Create a button context to be built upon.
     pub fn new() -> Self {
         Piano {
             common: widget::CommonBuilder::new(),
@@ -122,6 +138,14 @@ impl Widget for Piano {
         self.style.clone()
     }
 
+    fn default_x_position(&self, _ui: &Ui) -> Position {
+        Position::Relative(Relative::Place(Place::Middle), None)
+    }
+
+    fn default_y_position(&self, _ui: &Ui) -> Position {
+        Position::Relative(Relative::Place(Place::Middle), None)
+    }
+
     /// Update the state of the button by handling any input that has occurred since the last
     /// update.
     fn update(self, args: widget::UpdateArgs<Self>) -> Self::Event {
@@ -149,6 +173,9 @@ impl Widget for Piano {
             (color, event)
         };
 
+        let w = rect.w();
+        let h = rect.h();
+
         // Finally, we'll describe how we want our widget drawn by simply instantiating the
         // necessary primitive graphics widgets.
         //
@@ -163,24 +190,46 @@ impl Widget for Piano {
         // If you notice that conrod is missing some sort of primitive graphics that you
         // require, please file an issue or open a PR so we can add it! :)
 
-        // First, we'll draw the **Circle** with a radius that is half our given width.
-        widget::Rectangle::fill([rect.w(), rect.h()])
-            .middle_of(id)
-            .graphics_for(id)
-            .color(color)
-            .set(state.ids.circle, ui);
-
         // Now we'll instantiate our label using the **Text** widget.
         let label_color = style.label_color(&ui.theme);
         let font_size = style.label_font_size(&ui.theme);
         let font_id = style.label_font_id(&ui.theme).or(ui.fonts.ids().next());
-        widget::Text::new("Piano")
-            .and_then(font_id, widget::Text::font_id)
-            .middle_of(id)
+
+        let keys_container = Canvas::new()
+            .border(0.0)
+            .color(theme::PIANO_KEYS_BG);
+
+        let label_container = Canvas::new()
+            .length(50.0)
+            .border(0.0)
+            .color(theme::PIANO_LABEL_BG);
+
+        let mut cell = ui;
+
+        let flows = &[
+            (state.ids.piano_label_container, label_container),
+            (state.ids.piano_keys_container, keys_container)
+        ];
+
+        Canvas::new()
+            .flow_down(flows)
+            .border(0.0)
+            .set(state.ids.piano_container, &mut cell);
+
+        // println!("DONE RENDERING KEYS");
+
+        let keys = Keys::new()
+            .mid_top_of(state.ids.piano_keys_container)
+            .set(state.ids.piano_keys, &mut cell);
+
+        // println!("DONE RENDERING PIANO");
+        let label = Text::new("Piano")
+            .middle_of(state.ids.piano_label_container)
+            .and_then(font_id, Text::font_id)
             .font_size(font_size)
-            .graphics_for(id)
             .color(label_color)
-            .set(state.ids.text, ui);
+            .set(state.ids.piano_label, &mut cell);
+
 
         event
     }

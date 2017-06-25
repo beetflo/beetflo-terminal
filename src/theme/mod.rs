@@ -13,3 +13,6 @@ pub const TEXT_SHADE          : Color = make_color!(126.0,126.0,126.0);
 pub const HEADER_BG           : Color = make_color!(233.0,233.0,233.0);
 pub const FOOTER_BG           : Color = make_color!(196.0,196.0,196.0);
 
+pub const PIANO_LABEL_BG      : Color = make_color!(213.0,213.0,213.0);
+pub const PIANO_KEYS_BG       : Color = make_color!(203.0,203.0,203.0);
+pub const PIANO_BG            : Color = make_color!(203.0,203.0,203.0);

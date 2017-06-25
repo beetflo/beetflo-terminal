@@ -1,4 +1,4 @@
-use conrod::{self, widget, Ui, Colorable, Positionable, Widget, Borderable, Sizeable};
+use conrod::{widget, Ui, Colorable, Positionable, Widget, Borderable, Sizeable};
 // use conrod::backend::glium::glium::{DisplayBuild, Surface};
 use conrod::position::Dimension;
 
@@ -41,9 +41,11 @@ impl BasicTopDownLayout {
 
 
         let body_primary = widget::Canvas::new()
+            .border_color(SECONDARY_SHADE)
             .color(SECONDARY_SHADE);
 
         let body_secondary = widget::Canvas::new()
+            .border_color(SECONDARY_SHADE)
             .color(SECONDARY_SHADE);
 
         let body_flow = &[

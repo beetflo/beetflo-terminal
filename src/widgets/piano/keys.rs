@@ -1,7 +1,21 @@
-use conrod::{self, widget, Colorable, Dimensions, Point, Positionable, Widget};
+/// widgets/piano/keys.rs
+use conrod::{
+    self,
+    widget,
+    Colorable,
+    Dimensions,
+    Point,
+    Positionable,
+    Widget,
+    UiCell,
+    Ui,
+};
 
 
-pub struct TrackOverview {
+use conrod::position::{Relative, Position, Place};
+use conrod::color;
+
+pub struct Keys {
     /// An object that handles some of the dirty work of rendering a GUI. We don't
     /// really have to worry about it.
     common: widget::CommonBuilder,
@@ -38,8 +52,9 @@ widget_style!{
 // Here is where we generate the type that will produce these identifiers.
 widget_ids! {
     pub struct Ids {
-        circle,
-        text,
+        white_key,
+        black_key,
+        text
     }
 }
 
@@ -62,11 +77,15 @@ pub fn is_over_circ(circ_center: Point, mouse_point: Point, dim: Dimensions) -> 
     distance <= radius
 }
 
-impl TrackOverview {
+impl Keys {
+
+    pub fn attach(ui: &mut UiCell) {
+
+    }
 
     /// Create a button context to be built upon.
     pub fn new() -> Self {
-        TrackOverview {
+        Keys {
             common: widget::CommonBuilder::new(),
             style: Style::new(),
             enabled: true,
@@ -91,7 +110,7 @@ impl TrackOverview {
 
 
 
-impl Widget for TrackOverview {
+impl Widget for Keys {
     /// The State struct that we defined above.
     type State = State;
     /// The Style struct that we defined using the `widget_style!` macro.
@@ -117,66 +136,83 @@ impl Widget for TrackOverview {
         self.style.clone()
     }
 
-        /// Update the state of the button by handling any input that has occurred since the last
-        /// update.
-        fn update(self, args: widget::UpdateArgs<Self>) -> Self::Event {
-            let widget::UpdateArgs { id, state, rect, mut ui, style, .. } = args;
+    fn default_x_position(&self, _ui: &Ui) -> Position {
+        Position::Relative(Relative::Place(Place::Middle), None)
+    }
 
-            let (color, event) = {
-                let input = ui.widget_input(id);
+    fn default_y_position(&self, _ui: &Ui) -> Position {
+        Position::Relative(Relative::Place(Place::Middle), None)
+    }
 
-                // If the button was clicked, produce `Some` event.
-                let event = input.clicks().left().next().map(|_| ());
+    /// Update the state of the button by handling any input that has occurred since the last
+    /// update.
+    fn update(self, args: widget::UpdateArgs<Self>) -> Self::Event {
+        let widget::UpdateArgs { id, state, rect, mut ui, style, .. } = args;
 
-                let color = style.color(&ui.theme);
-                let color = input.mouse().map_or(color, |mouse| {
-                    if is_over_circ([0.0, 0.0], mouse.rel_xy(), rect.dim()) {
-                        if mouse.buttons.left().is_down() {
-                            color.clicked()
-                        } else {
-                            color.highlighted()
-                        }
+        let (color, event) = {
+            let input = ui.widget_input(id);
+
+            // If the button was clicked, produce `Some` event.
+            let event = input.clicks().left().next().map(|_| ());
+
+            let color = style.color(&ui.theme);
+            let color = input.mouse().map_or(color, |mouse| {
+                if is_over_circ([0.0, 0.0], mouse.rel_xy(), rect.dim()) {
+                    if mouse.buttons.left().is_down() {
+                        color.clicked()
                     } else {
-                        color
+                        color.highlighted()
                     }
-                });
+                } else {
+                    color
+                }
+            });
 
-                (color, event)
-            };
+            (color, event)
+        };
 
-            // Finally, we'll describe how we want our widget drawn by simply instantiating the
-            // necessary primitive graphics widgets.
-            //
-            // Conrod will automatically determine whether or not any changes have occurred and
-            // whether or not any widgets need to be re-drawn.
-            //
-            // The primitive graphics widgets are special in that their unique state is used within
-            // conrod's backend to do the actual drawing. This allows us to build up more complex
-            // widgets by using these simple primitives with our familiar layout, coloring, etc
-            // methods.
-            //
-            // If you notice that conrod is missing some sort of primitive graphics that you
-            // require, please file an issue or open a PR so we can add it! :)
+        let w = rect.w();
+        let h = rect.h();
 
-            // First, we'll draw the **Circle** with a radius that is half our given width.
-            widget::Rectangle::fill([rect.w(), rect.h()])
-                .middle_of(id)
-                .graphics_for(id)
-                .color(color)
-                .set(state.ids.circle, ui);
+        // Finally, we'll describe how we want our widget drawn by simply instantiating the
+        // necessary primitive graphics widgets.
+        //
+        // Conrod will automatically determine whether or not any changes have occurred and
+        // whether or not any widgets need to be re-drawn.
+        //
+        // The primitive graphics widgets are special in that their unique state is used within
+        // conrod's backend to do the actual drawing. This allows us to build up more complex
+        // widgets by using these simple primitives with our familiar layout, coloring, etc
+        // methods.
+        //
+        // If you notice that conrod is missing some sort of primitive graphics that you
+        // require, please file an issue or open a PR so we can add it! :)
 
-            // Now we'll instantiate our label using the **Text** widget.
-            let label_color = style.label_color(&ui.theme);
-            let font_size = style.label_font_size(&ui.theme);
-            let font_id = style.label_font_id(&ui.theme).or(ui.fonts.ids().next());
-            widget::Text::new("TrackOverview")
-                .and_then(font_id, widget::Text::font_id)
-                .middle_of(id)
-                .font_size(font_size)
-                .graphics_for(id)
-                .color(label_color)
-                .set(state.ids.text, ui);
+        // First, we'll draw the **Circle** with a radius that is half our given width.
 
-            event
-        }
+        widget::Rectangle::fill([20.0, 50.0])
+            .middle_of(id)
+            .graphics_for(id)
+            .color(color::BLACK)
+            .set(state.ids.black_key, ui);
+
+
+
+        // Now we'll instantiate our label using the **Text** widget.
+        let label_color = style.label_color(&ui.theme);
+        let font_size = style.label_font_size(&ui.theme);
+        let font_id = style.label_font_id(&ui.theme).or(ui.fonts.ids().next());
+        widget::Text::new("Keys")
+            // .x_y(w * 0.5, 100.0)
+            .and_then(font_id, widget::Text::font_id)
+            .floating(true)
+            .mid_top_of(id)
+            .down(14.00)
+            .font_size(font_size)
+            .graphics_for(id)
+            .color(label_color)
+            .set(state.ids.text, ui);
+
+        event
+    }
 }

@@ -1,7 +1,7 @@
 mod piano;
 mod track_overview;
 
-pub use self::piano::{Piano};
+pub use self::piano::{Piano, Keys};
 pub use self::track_overview::{TrackOverview};
 
 // Generate a unique `WidgetId` for each widget.
