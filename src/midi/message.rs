@@ -25,7 +25,7 @@ pub enum Octave {
     Oct0, Oct1, Oct2, Oct3, Oct4, Oct5, Oct6, Oct7, Oct8, Oct9, Oct10
 }
 
-use std::ops::Mul;
+// use std::ops::Mul;
 use std::fmt;
 
 impl fmt::Display for Name {

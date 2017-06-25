@@ -1,4 +1,6 @@
 /target/
+.#*
+tmp
 .idea
 **/*.rs.bk
 external
