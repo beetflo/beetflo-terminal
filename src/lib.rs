@@ -37,11 +37,11 @@ use utils::{Environment};
 use midi::{Reader, Message};
 use surface::{Core as Surface, Canvas};
 
-extern { fn beets_static(); }
+extern { fn beets(); }
 
 
 pub fn start() {
-    unsafe { beets_static(); }
+    unsafe { beets(); }
 
     env_logger::init().unwrap();
     Environment::init();

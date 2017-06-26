@@ -17,13 +17,10 @@ add_definitions(${GTK3_CFLAGS_OTHER})
 # Add an executable compiled from hello.c
 
 # add_library(beets_shared SHARED src/beets.c)
-add_library(beets_static STATIC src/beets.c)
-
-add_executable(beets src/beets.c)
+add_library(beets STATIC src/beets.c)
 
 # Link the target to the GTK+ libraries
-target_link_libraries(beets_static ${GTK3_LIBRARIES})
+target_link_libraries(beets ${GTK3_LIBRARIES})
 
-install (TARGETS beets DESTINATION bin)
-install (TARGETS beets_static DESTINATION lib)
+install (TARGETS beets   DESTINATION lib)
 
