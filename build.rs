@@ -1,15 +1,24 @@
-use std::process::Command;
-use std::env;
-use std::path::Path;
 
+#![feature(plugin)]
+#![feature(rustc_private)]
+
+#[macro_use] extern crate log;
+
+extern crate pkg_config;
 extern crate gcc;
+extern crate cmake;
 
+// use pkg_config::{Config, Error};
+
+extern crate env_logger;
 
 fn main() {
-    // gcc::compile_library("libbeets.a", &["src/beets.c"]);
-    gcc::Config::new()
-        .file("src/beets.c")
-        .define("FOO", Some("bar"))
-        .include("src")
-        .compile("libbeets.a");
+    env_logger::init().unwrap();
+    error!("entry!");
+
+    let dst = cmake::build("lib/beets");
+    error!("{}", dst.display());
+    println!("cargo:rustc-link-search=native={}", dst.display());
+    println!("cargo:rustc-link-lib=static=beets_static");
 }
+

@@ -2,6 +2,15 @@
 #![feature(plugin)]
 #![feature(exclusive_range_pattern)]
 
+// Temporarly lints during rapid iteration..
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+#![allow(unused_mut)]
+#![allow(unused_assignments)]
+#![allow(non_snake_case)]
+#![allow(unreachable_patterns)]
+
 #[macro_use] extern crate log;
 
 // #[cfg(all(feature="winit", feature="glium"))]
@@ -28,11 +37,11 @@ use utils::{Environment};
 use midi::{Reader, Message};
 use surface::{Core as Surface, Canvas};
 
-extern { fn beets(); }
+extern { fn beets_static(); }
 
 
 pub fn start() {
-    unsafe { beets(); }
+    unsafe { beets_static(); }
 
     env_logger::init().unwrap();
     Environment::init();

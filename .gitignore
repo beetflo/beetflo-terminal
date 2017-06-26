@@ -1,4 +1,6 @@
 /target/
+c/build
+build
 .#*
 tmp
 .idea
