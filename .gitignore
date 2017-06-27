@@ -5,5 +5,5 @@ build
 tmp
 .idea
 **/*.rs.bk
-external
+external"
 vendor

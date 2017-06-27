@@ -1,30 +1,42 @@
 [package]
-name = "beetflo"
-version = "0.1.0"
 authors = ["Bailey Cosier <bailey.cosier@gmail.com>"]
 build = "build.rs"
+name = "beetflo"
+version = "0.1.0"
 
-[features]
-glium = ["conrod/glium"]
-winit = ["conrod/winit"]
+[[bin]]
+name = "beetflo"
+path = "src/main.rs"
+
+[build-dependencies]
+cmake = "0.1.24"
+ctest = "0.1"
+gcc = "0.3"
+pkg-config = "0.3.9"
 
 [dependencies]
-midir = "0.3"
 clap = "2.19"
-rayon = "0.8.1"
-log = "0.3"
 env_logger = "0.3"
 find_folder = "0.3.0"
-gtk-sys = "0.3.4"
+log = "0.3"
+rayon = "0.8.1"
 
+# android_ffi = { git = "https://github.com/cosier/android-ffi-rs" }
+# android_support = { git = "https://github.com/cosier/android-support-rs" }
+
+[dependencies.android_ffi]
+path = "./vendor/android-ffi"
+
+[dependencies.android_support]
+path = "./vendor/android-support"
+
+[dependencies.midir]
+path = "./vendor/midir"
 
 [dependencies.conrod]
 features = ["glium", "winit"]
 path = "./vendor/conrod"
-# git = "https://github.com/cosier/conrod.git"
 
-[build-dependencies]
-gcc = "0.3"
-ctest = "0.1"
-pkg-config = "0.3.9"
-cmake = "0.1.24"
+[features]
+glium = ["conrod/glium"]
+winit = ["conrod/winit"]

@@ -7,8 +7,11 @@ use std::time::Duration;
 use std::io::{stdin, stdout, Write};
 use std::error::Error;
 
-use midir::{MidiInput, MidiOutput, Ignore};
+
 use midi::{Note, Message};
+
+#[cfg(target_os = "linux")]
+use midir::{MidiInput, MidiOutput, Ignore};
 
 use utils::Environment;
 use midi::message::State;
@@ -23,6 +26,12 @@ impl Reader {
         }
     }
 
+    #[cfg(target_os = "android")]
+    pub fn stream(&self) {
+        debug!("android detected: todo implement this");
+    }
+
+    #[cfg(target_os = "linux")]
     pub fn stream(&self) {
         debug!("beginning stream");
 

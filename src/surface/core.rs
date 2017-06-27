@@ -21,6 +21,9 @@ struct CanvasController {
     sender: Sender<Update>
 }
 
+pub const WIDTH: u32 = 800;
+pub const HEIGHT: u32 = 600;
+
 impl Core {
     pub fn new(recv: Receiver<Message>, sender: Sender<Message>) -> Core {
         Core { recv: recv, sender: sender, controller: None }
@@ -28,7 +31,7 @@ impl Core {
 
     pub fn render(&mut self) {
         let (cv_send, cv_recv) = std::sync::mpsc::channel::<Update>();
-        std::thread::spawn(|| Canvas::new(cv_recv).init());
+        std::thread::spawn(|| Canvas::new(cv_recv).init(WIDTH, HEIGHT));
 
         for msg in &self.recv {
             let up = translate_midi_into_surface_update(msg);

@@ -8,11 +8,8 @@ use std;
 use midi::Message;
 use layouts::{BasicTopDownLayout};
 
-const WIDTH: u32 = 800;
-const HEIGHT: u32 = 600;
-
 use std::sync::mpsc::Receiver;
-use surface::{Update, UpdateType};
+use surface::{Window, Update, UpdateType};
 
 use widgets::{Piano, TrackOverview};
 use widgets;
@@ -22,24 +19,18 @@ pub struct Canvas {
 }
 
 impl Canvas {
-    pub fn new(recv: Receiver<Update>) -> Canvas {
+    pub fn new(canvas_update_recv: Receiver<Update>) -> Canvas {
         Canvas {
-            recv: recv
+            recv: canvas_update_recv
         }
     }
 
-    pub fn init(&mut self) {
+    pub fn init(&mut self, width: u32, height: u32) {
         // Build the window.
-        let display = glium::glutin::WindowBuilder::new()
-            .with_vsync()
-            .with_dimensions(WIDTH, HEIGHT)
-            .with_title("Beetflo")
-            .with_multisampling(4)
-            .build_glium()
-            .unwrap();
+        let display = Window::build(width, height);
 
         // construct our `Ui`.
-        let mut ui = conrod::UiBuilder::new([WIDTH as f64, HEIGHT as f64]).build();
+        let mut ui = conrod::UiBuilder::new([width as f64, width as f64]).build();
 
         // Generate the widget identifiers.
         let mut manager = BasicTopDownLayout::new(&mut ui);
@@ -99,8 +90,8 @@ impl Canvas {
                         std::process::exit(1);
                     },
 
-                    _ => {
-                        // println!("Event:Unknown")
+                    a => {
+                        debug!("Event:Unknown - {:?}:", a)
                     },
                 }
             }
