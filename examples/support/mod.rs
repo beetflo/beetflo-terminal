@@ -363,13 +363,11 @@ pub fn gui(ui: &mut conrod::UiCell, ids: &Ids, app: &mut DemoApp) {
 /// 
 /// This `Iterator`-like type simplifies some of the boilerplate involved in setting up a
 /// glutin+glium event loop that works efficiently with conrod.
-#[cfg(feature="glium")]
 pub struct EventLoop {
     ui_needs_update: bool,
     last_update: std::time::Instant,
 }
 
-#[cfg(feature="glium")]
 impl EventLoop {
 
     pub fn new() -> Self {

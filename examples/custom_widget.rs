@@ -236,7 +236,6 @@ mod circular_button {
 }
 
 
-#[cfg(all(feature="winit", feature="glium"))]
 fn main() {
     use conrod::{self, widget, Colorable, Labelable, Positionable, Sizeable, Widget};
     use conrod::backend::glium::glium;
@@ -336,10 +335,4 @@ fn main() {
             target.finish().unwrap();
         }
     }
-}
-
-#[cfg(not(all(feature="winit", feature="glium")))]
-fn main() {
-    println!("This example requires the `winit` and `glium` features. \
-             Try running `cargo run --release --features=\"winit glium\" --example <example_name>`");
 }
