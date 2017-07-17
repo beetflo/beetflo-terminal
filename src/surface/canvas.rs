@@ -3,7 +3,9 @@
 use conrod::{self, widget, Colorable, Positionable, Widget};
 use conrod::backend::glium::glium;
 use conrod::backend::glium::glium::{DisplayBuild, Surface};
+use conrod::glium::glutin::Event;
 use std;
+
 
 use midi::Message;
 use layouts::{BasicTopDownLayout};
@@ -66,7 +68,7 @@ impl Canvas {
             // 16ms since the last yield.
 
             // Collect all pending events.
-            let mut events: Vec<_> = display.poll_events().collect();
+            let mut events: Vec<Event> = display.poll_events().collect();
 
             // If there are no events and the `Ui` does not need updating, wait for the next event.
             if events.is_empty() && !ui_needs_update {
@@ -77,7 +79,9 @@ impl Canvas {
             for event in events {
 
                 // Use the `winit` backend feature to convert the winit event to a conrod one.
-                if let Some(event) = conrod::backend::winit::convert(event.clone(), &display) {
+                let winit_event = event.clone();
+
+                if let Some(event) = conrod::backend::winit::convert(winit_event, &display) {
                     ui.handle_event(event);
                     ui_needs_update = true;
                 }

@@ -30,9 +30,9 @@ fn init_platform() {
 
 #[cfg(target_os = "linux")]
 fn init_platform() {
-    unsafe {
+    // unsafe {
         // beets_init();
         // beets_init_gtk();
-    }
+    // }
 }
 

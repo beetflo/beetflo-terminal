@@ -15,36 +15,33 @@ use conrod::{
 use conrod::position::{Relative, Position, Place};
 use conrod::color;
 
+#[derive(WidgetCommon)]
 pub struct Keys {
     /// An object that handles some of the dirty work of rendering a GUI. We don't
     /// really have to worry about it.
+    #[conrod(common_builder)]
     common: widget::CommonBuilder,
 
     /// See the Style struct below.
-    style: Style,
-    /// Whether the button is currently enabled, i.e. whether it responds to
+        style: Style,
+        /// Whether the button is currently enabled, i.e. whether it responds to
     /// user input.
     enabled: bool
 }
 
+#[derive(Default, Copy, Clone, Debug, PartialEq, WidgetStyle)]
+pub struct Style {
+    #[conrod(default = "theme.shape_color")]
+    pub color: Option<conrod::Color>,
 
-// We use the `widget_style!` macro to vastly simplify the definition and implementation of the
-// widget's associated `Style` type. This generates both a `Style` struct, as well as an
-// implementation that automatically retrieves defaults from the provided theme.
-//
-// See the documenation of the macro for a more details.
-widget_style!{
-    /// Represents the unique styling for our CircularButton widget.
-    style Style {
-        /// Color of the button.
-        - color: conrod::Color { theme.shape_color }
-        /// Color of the button's label.
-        - label_color: conrod::Color { theme.label_color }
-        /// Font size of the button's label.
-        - label_font_size: conrod::FontSize { theme.font_size_medium }
-        /// Specify a unique font for the label.
-        - label_font_id: Option<conrod::text::font::Id> { theme.font_id }
-    }
+    #[conrod(default = "theme.label_color")]
+    pub label_color: Option<conrod::Color>,
+
+    #[conrod(default = "theme.font_size_medium")]
+    pub label_font_size: Option<conrod::FontSize>,
+
+    #[conrod(default = "theme.font_id")]
+    pub label_font_id: Option<Option<conrod::text::font::Id>>
 }
 
 // We'll create the widget using a `Circle` widget and a `Text` widget for its label.
@@ -86,8 +83,8 @@ impl Keys {
     /// Create a button context to be built upon.
     pub fn new() -> Self {
         Keys {
-            common: widget::CommonBuilder::new(),
-            style: Style::new(),
+            common: widget::CommonBuilder::default(),
+            style: Style::default(),
             enabled: true,
         }
     }
@@ -119,14 +116,6 @@ impl Widget for Keys {
     ///
     /// `Some` when clicked, otherwise `None`.
     type Event = Option<()>;
-
-    fn common(&self) -> &widget::CommonBuilder {
-        &self.common
-    }
-
-    fn common_mut(&mut self) -> &mut widget::CommonBuilder {
-        &mut self.common
-    }
 
     fn init_state(&self, id_gen: widget::id::Generator) -> Self::State {
         State { ids: Ids::new(id_gen) }

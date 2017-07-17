@@ -15,6 +15,7 @@
 
 // #[cfg(all(feature="winit", feature="glium"))]
 #[macro_use] extern crate conrod;
+#[macro_use] extern crate conrod_derive;
 
 extern crate midir;
 extern crate clap;
