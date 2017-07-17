@@ -9,39 +9,39 @@ name = "beetflo"
 path = "src/main.rs"
 
 [build-dependencies]
+pkg-config = "0.3.9"
 cmake = "0.1.24"
 ctest = "0.1"
 gcc = "0.3"
-pkg-config = "0.3.9"
 
 [dependencies]
-clap = "2.19"
-env_logger = "0.3"
 find_folder = "0.3.0"
-log = "0.3"
+env_logger = "0.3"
 rayon = "0.8.1"
-
 image = "0.13.0"
 rand = "0.3.13"
+clap = "2.19"
+log = "0.3"
+
 # glutin_gfx.rs example dependencies
-gfx = "0.15.1"
-gfx_core = "0.7.0"
 gfx_window_glutin = "0.15.0"
+gfx_core = "0.7.0"
 glutin = "0.7.0"
+gfx = "0.15.1"
+
 # piston_window.rs example dependencies
 piston_window = "0.65.0"
 
-# android_ffi = { git = "https://github.com/cosier/android-ffi-rs" }
-# android_support = { git = "https://github.com/cosier/android-support-rs" }
-
 [dependencies.android_ffi]
-path = "./vendor/android-ffi"
+# path = "./vendor/android-ffi"
+version = "*"
 
 [dependencies.android_support]
-path = "./vendor/android-support"
+# path = "./vendor/android-support"
+version = "*"
 
 [dependencies.midir]
-path = "./vendor/midir"
+path = "./vendor/midix"
 
 [dependencies.conrod]
 features = ["glium", "winit"]

@@ -1,0 +1,6 @@
+[submodule "vendor/conrod"]
+	path = vendor/conrod
+	url = git@github.com:cosier/conrod
+[submodule "vendor/midix"]
+	path = vendor/midix
+	url = git@github.com:cosier/midix-rs
